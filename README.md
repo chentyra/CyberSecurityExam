@@ -49,7 +49,7 @@ L'output sarà:
 ## SlowLoris: Come installarlo 
 
 Bisogna copia la repository utilizzando il comando:
->sudo pip3 install slowloris
+>sudo pip3 install CyberSecurityExam
 
 Scaricare pip se necessario.
 ## Come utilizzare il tool
