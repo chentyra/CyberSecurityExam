@@ -44,13 +44,14 @@ L'output sarà:
 | -u | Per specificare URL target del test (nello stesso formato utilizzato dai browser) | 
 | -x | massima lunghezza, in byte, dei dati | 
 
-Posso utilizzare WireShark per osservare i pacchetti scambiati tra client e server.
+*Posso utilizzare WireShark per osservare i pacchetti scambiati tra client e server.*
 
 ## SlowLoris: Come installarlo [https://github.com/gkbrk/slowloris] 
 Uso le istruzioni indicate dal link sovrastante.
 ## Come utilizzare il tool
 Digitare nella command window di Kali:
 > slowloris [url] -s [# socket]
+
 In generale è possibile scegliere tra diverse opzioni visibili digitando nella command windown il comando:
 > slowloris -h
 
@@ -68,6 +69,21 @@ L'output sarà:
 | --https | usa https per le richieste | 
 | --sleeptime | tempo di attesa tra ogni header inviato | 
 
+*Posso utilizzare WireShark per osservare i pacchetti scambiati tra client e server oppure Etherape per osservare graficamente il traffico fra quest'ultimi.*
+
+## Cos'è Etherape e come installarlo
+EtherApe è un monitor di rete grafico per Unix modellato su etherman. Dotato di livelli di collegamento, modalità IP e TCP, visualizza graficamente l'attività di rete. Host e collegamenti cambiano di dimensioni in base al traffico. I protocolli utilizzati per lo scambio dei dati vengono visualizzati con colori differenti. Questo strumento permette anche di esportate i grafici ottenuti.
+
+Per installarlo bisogna prima aggiornare il sistema linux . Per farlo digitare nella command window:
+> sudo apt-get update 
+
+Installare Etherape 
+> sudo apt-get install etherape
+
+Digitare y.
+
+Per avviarlo digitare
+>sudo etherape
 
 
 
