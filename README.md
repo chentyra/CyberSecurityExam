@@ -85,6 +85,60 @@ Digitare y.
 Per avviarlo digitare
 >sudo etherape
 
+# Tecniche di Mitigazione
+
+Ci sono vari modi per mitigare l’attacco tra cui:
+* Incrementare il numero massimo di clienti che il web server può accettare;
+* Limitare il numero di connessioni che un utente IP può instaurare;
+* Limitare l’intervallo di tempo della connessione dedicata al client;
+* Implementare alcuni moduli apache tra cui:
+  * Mod_limitipconn
+  * Mod_qos
+  * Mod_evasive
+  * Mod security
+  * Mod_noloris
+  * Mod_antiloris
+  * Mod_reqtimeout (disponibile su Apache 2.2.15 ed è una soluzione supportata dagli sviluppatori)
+  
+## Netstat
+
+Prima di bloccare un indirizzo Ip , probabile causa dell'attacco , devo prima individuare tale indirizzo. Per farlo uso **Netstat**.
+
+Netstat, composto dalle parole network (“rete”) e statistics (“statistiche”), è un programma che funziona tramite istruzioni date dalla riga di comando. Fornisce statistiche essenziali su tutte le attività di rete e dà informazioni su quali porte e indirizzi funzionino le rispettive connessioni (TCP, UDP), oltre a indicare quali siano le porte aperte per accogliere le richieste. Attraverso il comando:
+> netstat -ntu -4 -6 |  awk '/^tcp/{ print $5 }' | sed -r 's/:[0-9]+$//' | sort | uniq -c | sort –
+
+Nel caso questo comando non funzioni, usare :
+> netstat -ntu |  awk '/^tcp/{ print $5 }' | sed -r 's/:[0-9]+$//' | sort | uniq -c | sort –n
+
+È possibile individuare gli indirizzi IP che utilizzano maggiormente il server , ordinandole e contando le loro occorrenze. Un indirizzo Ip che istaura molte connessioni potrebbe essere la causa dell’attacco.
+
+### Come bloccare un indirizzo IP
+* **Prima soluzione**
+
+Uso il comando:
+> ip route add blackhole 92.243.xx.xx
+
+Riavviare Apache.
+
+* **Seconda soluzione**
+
+Uso il comando: 
+> iptables -I INPUT -p tcp --dport 80 -m connlimit --connlimit-above 50 --connlimit-mask 20 -j DROP
+
+In questo modo è possibile limitare le connessioni che si possono istaurare con il server.
+
+* **Terza Soluzione**
+Uso il comando:
+> iptables -A INPUT --src <the specific IP> -j DROP
+  
+ Un indirizzo Ip viene bloccato utilizzando le Ip Tables.
+
+
+
+
+
+
+
 
 
 
