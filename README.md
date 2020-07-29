@@ -46,8 +46,12 @@ L'output sarà:
 
 *Posso utilizzare WireShark per osservare i pacchetti scambiati tra client e server.*
 
-## SlowLoris: Come installarlo [https://github.com/gkbrk/slowloris] 
-Uso le istruzioni indicate dal link sovrastante.
+## SlowLoris: Come installarlo 
+
+Bisogna copia la repository utilizzando il comando:
+>sudo pip3 install slowloris
+
+Scaricare pip se necessario.
 ## Come utilizzare il tool
 Digitare nella command window di Kali:
 > slowloris [url] -s [# socket]
