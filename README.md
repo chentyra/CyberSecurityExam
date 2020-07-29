@@ -22,7 +22,7 @@ In generale è possibile scegliere tra diverse opzioni visibili digitando nella 
 
 L'output sarà:
 
-| Comando | Descrizione |
+| **Comando** | **Descrizione** |
 | --- | --- |
 |**OpzioniProxy** | **Descrizione** |
 | -d | Permette di indirizzare tutto il traffico attraverso un proxy e relativa porta. Ad es. -d proxy:port | 
@@ -43,6 +43,30 @@ L'output sarà:
 | -t | Permette di specificare un verb personalizzato | 
 | -u | Per specificare URL target del test (nello stesso formato utilizzato dai browser) | 
 | -x | massima lunghezza, in byte, dei dati | 
+
+Posso utilizzare WireShark per osservare i pacchetti scambiati tra client e server.
+
+## SlowLoris: Come installarlo [https://github.com/gkbrk/slowloris] 
+Uso le istruzioni indicate dal link sovrastante.
+## Come utilizzare il tool
+Digitare nella command window di Kali:
+> slowloris [url] -s [# socket]
+In generale è possibile scegliere tra diverse opzioni visibili digitando nella command windown il comando:
+> slowloris -h
+
+L'output sarà:
+| **Comando** | **Descrizione** |
+| --- | --- |
+|**OpzioniProxy** | **Descrizione** |
+| -h | Viene mostrato l'help | 
+| -s | Numero di socker da instaurare con il server | 
+| -p | Porto usato dal sito. Di solito è 80 | 
+| -v | Verbosity. Specifica il livello di dettaglio del log (valori da 0 a 4). | 
+| -ua | User-agent random per ogni richiesta | 
+| --proxy-host | SOCKS5 proxy host | 
+| --proxy-port | SOCKS5 proxy port |
+| --https | usa https per le richieste | 
+| --sleeptime | tempo di attesa tra ogni header inviato | 
 
 
 
