@@ -1,5 +1,5 @@
 # CyberSecurityExam
-In questo documento vedremo come utilizzare il tool slowhttptest e lo slowloris.
+In questo documento vedremo come utilizzare il tool slowhttptest e lo slowloris su un terminale Linux.
 
 * SlowHTTPTest è uno strumento che simula alcuni attacchi Denial of Service a livello di applicazione prolungando le connessioni HTTP in diversi modi.
 * Lo SlowLoris invia periodicamente delle intestazioni complete mantendendo in vita diverse connessioni che non vengono chiuse a meno che non lo faccia il server.
@@ -51,7 +51,7 @@ L'output sarà:
 Bisogna copia la repository utilizzando il comando:
 >sudo pip3 install CyberSecurityExam
 
-Scaricare pip se necessario.
+Scaricare pip se necessario. 
 ## Come utilizzare il tool
 Digitare nella command window di Kali:
 > slowloris [url] -s [# socket]
@@ -108,11 +108,7 @@ Ci sono vari modi per mitigare l’attacco tra cui:
 
 Prima di bloccare un indirizzo Ip , probabile causa dell'attacco , devo prima individuare tale indirizzo. Per farlo uso **Netstat**.
 
-Netstat, composto dalle parole network (“rete”) e statistics (“statistiche”), è un programma che funziona tramite istruzioni date dalla riga di comando. Fornisce statistiche essenziali su tutte le attività di rete e dà informazioni su quali porte e indirizzi funzionino le rispettive connessioni (TCP, UDP), oltre a indicare quali siano le porte aperte per accogliere le richieste. Attraverso il comando:
-> netstat -ntu -4 -6 |  awk '/^tcp/{ print $5 }' | sed -r 's/:[0-9]+$//' | sort | uniq -c | sort –
-
-Nel caso questo comando non funzioni, usare :
-> netstat -ntu |  awk '/^tcp/{ print $5 }' | sed -r 's/:[0-9]+$//' | sort | uniq -c | sort –n
+Netstat, composto dalle parole network (“rete”) e statistics (“statistiche”), è un programma che funziona tramite istruzioni date dalla riga di comando. Fornisce statistiche essenziali su tutte le attività di rete e dà informazioni su quali porte e indirizzi funzionino le rispettive connessioni (TCP, UDP), oltre a indicare quali siano le porte aperte per accogliere le richieste. 
 
 È possibile individuare gli indirizzi IP che utilizzano maggiormente il server , ordinandole e contando le loro occorrenze. Un indirizzo Ip che istaura molte connessioni potrebbe essere la causa dell’attacco.
 
@@ -136,16 +132,3 @@ Uso il comando:
 > iptables -A INPUT --src <the specific IP> -j DROP
   
  Un indirizzo Ip viene bloccato utilizzando le Ip Tables.
-
-
-
-
-
-
-
-
-
-
-
-
-
